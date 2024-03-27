@@ -1,0 +1,103 @@
+package viva_le_formike_ordinato;
+import java.util.Scanner;
+public class formica {
+	static String input_s() {
+		Scanner d=new Scanner(System.in);
+		String stringa=d.nextLine();
+		return stringa;
+	}
+	static int input_i() {
+		Scanner d=new Scanner(System.in);
+		int intero=d.nextInt();
+		return intero;
+	}
+	static int lunghezzaschermo() {
+		for(int i=80;i>1;i--) {
+			System.out.println(i);
+		}
+		System.out.print("fino a che numero vedi sullo schermo????");
+
+		int a=input_i();
+		return a;
+	}
+	int N=lunghezzaschermo();
+	private String nomep;
+	private int xp;
+	private int xmaxp=N*2;
+	private int yp;
+	private int ymaxp=N;
+	private static int energiap=100;
+	int passomax=energia;
+	int passopasso=energia;
+	int [][][] pnpp = new int[99999][xmaxp][ymaxp];
+	//sarebbe  pnp -> è presente nel punto specifico? l'informazione che indica se è viva o no è contenuta qui in pratica
+	String nome=nomep;
+	int x=xp;
+	int xmax=xmaxp;
+	int y=yp;
+	int ymax=ymaxp;
+	static int energia=energiap;
+	public int fioripresi=0;
+	int [][][] pnp = pnpp;
+	void refp() {  //refp=refresh private
+		nomep=nome;
+		xp=x;
+		xmaxp=xmax;
+		yp=y;
+		ymaxp=ymax;
+		energiap=energia;
+
+	}
+	int direzione(){
+		double randomNumber = Math.random();
+		randomNumber=(randomNumber*10000000)%8+1;
+		int direz= (int) randomNumber;
+		return direz;
+	}
+	formica(){
+		this.nome="Rinaldo";
+		this.x=xmax-1;
+		this.y=1;
+		formica.energia=100;
+		for(int a=0;a<99999;a++) {
+			for(int b=0;b<this.xmax;b++) {
+				for(int c=0;c<this.ymax;c++) {
+					this.pnp[a][b][c]=1;
+				}
+			}
+		}
+	}
+	void faiunpasso(int j) {
+			this.energia= this.energia-1;
+			switch (this.direzione()) {
+			case 1: if((this.x+1)<xmax){this.x=this.x+1;}
+			break;
+			case 2: if((this.y+1)<ymax){this.y=this.y+1;}
+			break;
+			case 3: if((this.x-1)>0){this.x=this.x-1;}
+			break; 
+			case 4: if((this.y-1)>0){this.y=this.y-1;}
+			break;
+			case 5: if(((this.x+1)<xmax)&&((this.y+1)<ymax)) {this.x=this.x+1;
+															this.y=this.y+1;}
+			break;
+			case 6: if(((this.x-1)>0)&&((this.y-1)>0)) {this.x=this.x-1;										
+														this.y=this.y-1;}
+			break;
+			case 7: if(((this.x-1)>0)&&((this.y+1)<ymax)) {this.x=this.x-1;
+														this.y=this.y+1;}
+			break;
+			case 8: if(((this.x+1)<xmax)&&((this.y-1)>0)) {this.x=this.x+1;
+														this.y=this.y-1;}
+			break;
+			}
+			this.pnp[j][this.x][this.y]=0;
+	}
+}
+
+
+
+
+
+
+
