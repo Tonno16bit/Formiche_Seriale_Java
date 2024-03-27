@@ -1,0 +1,379 @@
+package viva_le_formike_ordinato;
+
+import java.util.concurrent.TimeUnit;
+
+import java.util.Scanner;
+
+import viva_le_formike_ordinato.formica;
+
+import java.util.concurrent.Executors;
+
+import java.util.concurrent.ScheduledExecutorService;
+
+import java.util.concurrent.TimeUnit;
+
+
+
+public class formain_ordinato {
+
+
+
+	public static void wait(int ms) {
+
+        try {
+
+            TimeUnit.MILLISECONDS.sleep(ms);
+
+        }
+
+        catch (InterruptedException ex) {
+
+            Thread.currentThread().interrupt();
+
+        }
+
+    }
+
+
+
+	static int numerorandom() {
+
+		double randomNumber = Math.random();
+
+		randomNumber=(randomNumber*10000000)%24+1;
+
+		int intero= (int) randomNumber;
+
+		return intero;
+
+	}
+
+	static void creaprato(int n, char [][] Napolo, formica formicaa ) {
+
+		for(int i=0;i<n;i++) {
+
+			for(int j=0;j<formicaa.xmax;j++) {
+
+
+
+				if((numerorandom()==3)/*||(numerorandom()==24)*/) {
+
+					Napolo[j][i]='o';
+
+				}else{
+
+					if((numerorandom()==4)/*||(numerorandom()==23)*/){
+
+						Napolo[j][i]='w';
+
+					}else{
+
+						Napolo[j][i]=' ';}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	static void modificapuntoprato(int x, int y, char [][] Napoloo, formica formicaaa) {
+
+		Napoloo[x][y]=' ';
+
+	}
+
+	
+
+	static void posizionaformica(int a, int n, char [][] Napolo, formica formicaa,boolean vnt, int h) {
+
+		int metà=n/2;
+
+		for(int i=0;i<n;i++) {
+
+			System.out.println("");
+
+			for(int j=0;j<formicaa.xmax;j++) {
+
+				if(formicaa.pnp[a][j][i]==0) {
+
+					if(formicaa.energia==0&&!vnt) {
+
+						System.out.print("+");
+
+					}else {
+
+					System.out.print("F");
+
+					formicaa.passopasso--;
+
+					//j++;
+
+					if(Napolo[j][i]=='o') {
+
+						formicaa.energia=formicaa.energia+20;
+
+						h=h+50;
+
+						formicaa.fioripresi++;
+
+						formicaa.passopasso=formicaa.passopasso+15;
+
+						/*for(int k=h-50;k<h;k++) {
+
+							formicaa.faiunpasso(k);
+
+						}*/
+
+						modificapuntoprato(j,i,Napolo, formicaa);
+
+					}
+
+					}}else {
+
+					System.out.print(Napolo[j][i]);
+
+				}
+
+				if(j==formicaa.xmax-1) {
+
+					System.out.print("|");
+
+				}
+
+				
+
+			}
+
+			if(i==metà) {
+
+				if(formicaa.energia>0) {
+
+				System.out.print("		"+formicaa.nome+" sta gareggiando");
+
+				}
+
+				if(formicaa.energia==0&&!vnt){
+
+					System.out.print("		"+formicaa.nome+" la formica ha perso");
+
+				}
+
+				if(formicaa.energia==0&&vnt){
+
+					System.out.print("		"+formicaa.nome+" la formica ha vinto ");
+
+				}
+
+			}else { if(i==metà+1) {
+
+				 System.out.print("		energia rimanente di "+formicaa.nome+": ");
+
+				 //System.out.print((formicaa.passopasso)/15);
+
+				 for(int q=0;(q<((int)((formicaa.energia)/15))+1&&formicaa.energia>0);q++) {
+
+					 System.out.print("♥ ");
+
+					 //System.out.print("A");
+
+				 }
+
+				 /*for(int p=0;p<(10-((int)((formicaa.passopasso/15))))&&p>0;p++) {
+
+					 System.out.print(" ");
+
+				 }*/
+
+				 System.out.print("");
+
+			}else {
+
+				if(i==metà+2) {
+
+					System.out.print("		fiori presi da "+formicaa.nome+": "+formicaa.fioripresi);
+
+				}
+
+			}
+
+			}
+
+
+
+
+
+		}
+
+	}
+
+	static int[] creaareavincita(formica formicaa, int n, char [][] Napolo) {
+
+		int l= ((int)n/9)+1;
+
+		int Xa,Xb,Xc,Xd,Ya,Yb,Yc,Yd;
+
+		Xa=(int)((formicaa.xmax/2)+(l));
+
+		Ya=(int)((formicaa.ymax/2)-(l/2));
+
+		Xb=(int)((formicaa.xmax/2)+(l));
+
+		Yb=(int)((formicaa.ymax/2)+(l/2));
+
+		Xc=(int)((formicaa.xmax/2)-(l));
+
+		Yc=(int)((formicaa.ymax/2)+(l/2));
+
+		Xd=(int)((formicaa.xmax/2)-(l));
+
+		Yd=(int)((formicaa.ymax/2)-(l/2));
+
+		int [] arrivo= {Xa,Ya,Xb,Yb,Xc,Yc,Xd,Yd};
+
+		/*System.out.println(Xa);
+
+		System.out.println(Ya);
+
+		System.out.println(Xb);
+
+		System.out.println(Yb);
+
+		System.out.println(Xc);
+
+		System.out.println(Yc);
+
+		System.out.println(Xd);
+
+		System.out.println(Yd);*/
+
+		return arrivo;
+
+	}
+
+	static String input_s() {
+
+		Scanner d=new Scanner(System.in);
+
+		String stringa=d.nextLine();
+
+		return stringa;
+
+	}
+
+	static int input_i() {
+
+		Scanner d=new Scanner(System.in);
+
+		int intero=d.nextInt();
+
+		return intero;
+
+	}
+
+	static int lunghezzaschermo() {
+
+		for(int i=80;i>1;i--) {
+
+			System.out.println(i);
+
+		}
+
+		System.out.print("fino a che numero vedi sullo schermo????");
+
+		int a=input_i();
+
+		return a;
+
+	}
+
+	static boolean vintoo (int [] c, formica formicaa) {
+
+		boolean a=false;
+
+		for(int i=0;i<formicaa.ymax;i++) {
+
+			for(int j=0;j<formicaa.xmax;j++) {
+
+				if(formicaa.pnp[formicaa.passomax-1][j][i]==0) {
+
+					if((i>c[1])&&(i<c[3])&&(j>c[4])&&(j<c[0])) {
+
+						a=true;
+
+					}
+
+
+
+				}
+
+			}
+
+		}
+
+
+
+		return a;
+
+	}
+
+
+
+	public static void main(String[] args) {
+
+		// TODO Auto-generated method stub
+
+		formica formica1 = new formica();
+
+		//crea una nuova formica e quindi prende la dimensione dello schermo DA TROVARE COME NON FARLO CHIEDERE OGNI VOLTA
+
+		char [][] Napoli = new char[100][formica1.N];
+
+		//crea il vettore di caratteri che conterrà il prato
+
+		int [] zonaarrivo = creaareavincita(formica1,formica1.N, Napoli);
+
+		//crea una variabile che, attraverso la funzione creaareavincita, memorizza come vettore, le varie coordinate dei vertici del punto di arrivo
+
+		creaprato(formica1.N,Napoli, formica1);
+
+		//genera il prato con fiori ed erba posizionati in maniera pseudocasuale
+
+		int a=formica1.energia;
+		formica1.refp();
+		//associa una variabile che non modificheremo che prende il valore dell'energia iniziale e quindi quanti passi farà
+
+		int i=0;
+
+		//genera il viaggio della formica
+
+		
+
+		boolean vntt=vintoo(zonaarrivo,formica1);
+		formica1.refp();
+		System.out.println("sium");
+
+		do{	formica1.faiunpasso(i);
+		formica1.refp();
+			posizionaformica(i,formica1.N, Napoli, formica1, vntt, a);
+
+			wait(150);
+
+			i++;
+
+		}while(formica1.energia>0);
+
+
+		formica1.refp();
+
+
+
+
+
+	}
+
+
+
+}
+
